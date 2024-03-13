@@ -1,0 +1,35 @@
+<mujoco>
+    <worldbody>
+        <light diffuse=".5 .5 .5" pos="0 0 3" dir="0 0 -1" />
+        <geom type="plane" size="5 5 0.1" rgba=".9 0 0 1" />
+        <body>
+            <joint type="hinge" name="arm12" />
+
+            <body pos="0 0 .8">
+                <geom euler="0 0 45" pos="1 1 0" type="box" size="1 .015 .25"
+                    rgba="0 .9 0 1"
+                    name="arm1" />
+            </body>
+
+            <body pos="0 0 .8">
+                <geom euler="0 0 -45" pos="1.5 .5 0" type="box" size="0.5 .015 .25" rgba="0 .9 0 1"
+                    name="arm2" />
+
+            </body>
+
+        </body>
+        <body pos="0 0 .8">
+            <joint type="hinge" />
+            <geom euler="0 0 45" pos="2.5 0.5 0" type="box" size="0.5 .015 .25" rgba="0 .9 0 1"
+                name="arm3" />
+
+            <geom euler="0 0 -45" pos="3 1 0" type="box" size="1 .015 .25" rgba="0 .9 0 1"
+                name="arm4" />
+        </body>
+
+    </worldbody>
+    <actuator>
+        <motor name="actuator_arm12" joint="arm12" />
+    </actuator>
+</mujoco>
+  
