@@ -1,37 +1,60 @@
 <mujoco>
+    <visual>
+        <headlight diffuse="0.6 0.6 0.6" ambient="0.3 0.3 0.3" specular="0 0 0" />
+        <rgba haze="0.15 0.25 0.35 1" />
+    </visual>
+    <asset>
+        <texture type="skybox" builtin="gradient" rgb1="0.3 0.5 0.7" rgb2="0 0 0" width="512"
+            height="3072" />
+        <texture type="2d" name="groundplane" builtin="checker" mark="edge" rgb1="0.2 0.3 0.4"
+            rgb2="0.1 0.2 0.3"
+            markrgb="0.8 0.8 0.8" width="300" height="300" />
+        <material name="groundplane" texture="groundplane" texuniform="true" texrepeat="5 5"
+            reflectance="0.2" />
+        <material name="collision_material" rgba="0 0 0 0" /> <!-- transparent for collision -->
+        <material name="visual_material" rgba="0 0 1 0.3" /> <!-- Blue semi-transparent for visual -->
+    </asset>
+
     <worldbody>
-        <light diffuse=".5 .5 .5" pos="0 0 3" dir="0 0 -1" />
-        <geom type="plane" size="5 5 0.1" rgba=".9 0 0 1" />
-        <body>
-            <joint type="hinge" name="arm12" />
-
-            <body pos="0 0 .8">
-                <geom euler="0 0 45" pos="1 1 0" type="box" size="1 .015 .25"
-                    rgba="0 .9 0 1"
-                    name="arm1" />
-            </body>
-
-            <body pos="0 0 .8">
-                <geom euler="0 0 -45" pos="1.05 .35 0" type="box" size="0.5 .015 .25"
-                    rgba="0 .9 0 1"
-                    name="arm2" />
-
-            </body>
-
-            <body pos="0 0 .8">
-                <joint type="hinge" />
-                <geom euler="0 0 45" pos="1.76 0.37 0" type="box" size="0.5 .015 .25"
-                    rgba="0 .9 0 1"
-                    name="arm3" />
-            </body>
-            <body pos="0 0 .8">
-                <geom euler="0 0 -45" pos="2.125 .75 0" type="box" size="1 .015 .25" rgba="0 .9 0 1"
-                    name="arm4" />
+        <light pos="0 0 1.5" dir="0 0 -1" directional="true" />
+        <geom name="floor" size="0 0 0.05" type="plane" material="groundplane" />
+        <body name="base" pos="0 0 0.05">
+            <body name="longarm_1" pos="0 0.105 0.021">
+                <joint pos="0 -0.105 0" name="base_jt" type="hinge" axis="0 0 1" limited="true"
+                    range="0 3.14" />
+                <geom type="box" size="0.0025 0.1 0.02" euler="0 0 0" rgba="0 0 1 1" />
+                <body name="connector" pos="0 0.1 0">
+                    <joint pos="0 0 0" name="cylinder_l1" type="hinge" axis="0 0 1" limited="true"
+                        range="0 3.14" />
+                    <geom type="cylinder" size="0.005 0.01" euler="0 0 0" rgba="1 0 0 1" />
+                    <body name="longarm_2" pos="0.1 0 0">
+                        <joint pos="0 0 0" name="l3_jt" type="hinge" axis="0 0 1" limited="true"
+                            range="0 3.14" />
+                        <geom type="box" size="0.0025 0.1 0.02" euler="0 0 90" rgba="1 0 0 0.5" />
+                        <body name="l2" pos="-0.05 -0.1 0">
+                            <joint pos="-0.05 0 0" name="l1_jt" type="hinge" axis="0 0 1"
+                                limited="true"
+                                range="0 3.14" />
+                            <geom type="box" size="0.0025 0.05 0.02" euler="0 0 90" rgba="0 1 0 0.5" />
+                            <body name="l3" pos="0.05 0.05 0">
+                                <joint pos="0 -0.05 0" name="l2_jt" type="hinge" axis="0 0 1"
+                                    limited="true"
+                                    range="0 3.14" />
+                                <geom type="box" size="0.0025 0.05 0.02" euler="0 0 0"
+                                    rgba="0.5 0.5 0 0.5" />
+                            </body>
+                        </body>
+                    </body>
+                </body>
             </body>
         </body>
     </worldbody>
+    <!-- <equality>
+        <weld name="weld14" body1="l1" body2="l2" anchor="0 0 0" />
+    </equality> -->
     <actuator>
-        <motor name="actuator_arm12" joint="arm12" />
+        <motor name="top_actuator" joint="l2_jt" />
     </actuator>
+
 </mujoco>
   
