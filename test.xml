@@ -20,24 +20,28 @@
         <geom name="floor" size="0 0 0.05" type="plane" material="groundplane" />
         <body name="base" pos="0 0 0.05">
             <body name="longarm_1" pos="0 0.105 0.021">
-                <joint pos="0 -0.105 0" name="base_jt" type="hinge" axis="0 0 1" limited="true"
-                    range="0 3.14" />
+                <joint pos="0 -0.105 0" name="base_jt" type="hinge" axis="0 0 1" />
                 <geom type="box" size="0.0025 0.1 0.02" euler="0 0 0" rgba="0 0 1 1" />
-                <body name="connector" pos="0 0.1 0">
-                    <joint pos="0 0 0" name="cylinder_l1" type="hinge" axis="0 0 1" limited="true"
+                <body name="l2" pos="0.1 0.1 0">
+                    <joint pos="0 0 0" name="long_arm2jt" type="hinge" axis="0 0 1"
+                        limited="true"
                         range="0 3.14" />
-                    <geom type="cylinder" size="0.005 0.01" euler="0 0 0" rgba="1 0 0 1" />
-                    <body name="longarm_2" pos="0.1 0 0">
-                        <joint pos="0 0 0" name="l3_jt" type="hinge" axis="0 0 1" limited="true"
+                    <geom type="box" size="0.0025 0.1 0.02" euler="0 0 90" rgba="1 0 0 0.5" />
+                    <body name="l3" pos="-0.05 -0.1 0">
+                        <joint pos="-0.05 0 0" name="l1_jt" type="hinge" axis="0 0 1"
+                            limited="true"
                             range="0 3.14" />
-                        <geom type="box" size="0.0025 0.1 0.02" euler="0 0 90" rgba="1 0 0 0.5" />
-                        <body name="l2" pos="-0.05 -0.1 0">
-                            <joint pos="-0.05 0 0" name="l1_jt" type="hinge" axis="0 0 1"
+                        <geom type="box" size="0.0025 0.05 0.02" euler="0 0 90" rgba="0 1 0 0.5" />
+                        <body name="connector" pos="0.05 0 0">
+                            <joint pos="-0.005 0 0" name="cylinder_l3_jt" type="hinge" axis="0 0 1"
                                 limited="true"
                                 range="0 3.14" />
-                            <geom type="box" size="0.0025 0.05 0.02" euler="0 0 90" rgba="0 1 0 0.5" />
-                            <body name="l3" pos="0.05 0.05 0">
-                                <joint pos="0 -0.05 0" name="l2_jt" type="hinge" axis="0 0 1"
+                            <joint pos="0 0 0" name="slide_jt1" type="slide" axis="1 0 0" />
+                            <joint pos="0 0 0" name="slide_jt2" type="slide" axis="0 1 0" />
+                            <geom type="cylinder" size="0.005 0.01" euler="0 0 0" rgba="1 0 0 1" />
+                            <body name="l4" pos="0 0.05 0">
+                                <joint pos="0 -0.045 0" name="cylinder_l4_jt" type="hinge"
+                                    axis="0 0 1"
                                     limited="true"
                                     range="0 3.14" />
                                 <geom type="box" size="0.0025 0.05 0.02" euler="0 0 0"
@@ -49,11 +53,16 @@
             </body>
         </body>
     </worldbody>
-    <!-- <equality>
-        <weld name="weld14" body1="l1" body2="l2" anchor="0 0 0" />
-    </equality> -->
+    <equality>
+        <weld name="weld12" body1="l2" body2="longarm_1" anchor="0 0 0" />
+        <weld name="cylinder_yellow" body1="l4" body2="connector" anchor="0 0 0" />
+        <weld name="cylinder_green" body1="l3" body2="connector" anchor="0 0 0" />
+        <weld name="red_yellow" body1="l2" body2="l4" anchor="0 0 0" />
+        <weld name="blue_green" body1="longarm_1" body2="l3" anchor="0 0 0" />
+    </equality>
     <actuator>
-        <motor name="top_actuator" joint="l2_jt" />
+        <position name="x_actuator" joint="slide_jt1" kp="10" />
+        <position name="y_actuator" joint="slide_jt2" kp="10" />
     </actuator>
 
 </mujoco>
