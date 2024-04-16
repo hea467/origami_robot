@@ -4,13 +4,9 @@
         <rgba haze="0.15 0.25 0.35 1" />
     </visual>
     <asset>
-        <texture type="skybox" builtin="gradient" rgb1="0.3 0.5 0.7" rgb2="0 0 0" width="512"
-            height="3072" />
-        <texture type="2d" name="groundplane" builtin="checker" mark="edge" rgb1="0.2 0.3 0.4"
-            rgb2="0.1 0.2 0.3"
-            markrgb="0.8 0.8 0.8" width="300" height="300" />
-        <material name="groundplane" texture="groundplane" texuniform="true" texrepeat="5 5"
-            reflectance="0.2" />
+        <texture type="skybox" builtin="gradient" rgb1="0.3 0.5 0.7" rgb2="0 0 0" width="512" height="3072" />
+        <texture type="2d" name="groundplane" builtin="checker" mark="edge" rgb1="0.2 0.3 0.4" rgb2="0.1 0.2 0.3" markrgb="0.8 0.8 0.8" width="300" height="300" />
+        <material name="groundplane" texture="groundplane" texuniform="true" texrepeat="5 5" reflectance="0.2" />
         <material name="collision_material" rgba="0 0 0 0" /> <!-- transparent for collision -->
         <material name="visual_material" rgba="0 0 1 0.3" /> <!-- Blue semi-transparent for visual -->
     </asset>
@@ -19,24 +15,24 @@
         <light pos="0 0 1.5" dir="0 0 -1" directional="true" />
         <geom name="floor" size="0 0 0.05" type="plane" material="groundplane" />
         <body name="blue" pos="0 0.105 0.021">
-            <joint pos="0 -0.105 0" name="base_jt" type="hinge" axis="0 0 1" />
+            <joint pos="0 -0.105 0" name="base_jt" type="hinge" axis="0 0 1" limited="true" range="-90 90" springdamper="1 1" />
             <geom type="box" size="0.0025 0.1 0.02" euler="0 0 0" rgba="0 0 1 1" />
             <body name="red" pos="0.1 0.1 0">
-                <joint pos="-0.1 0 0" name="long_arm2jt" type="hinge" axis="0 0 1" limited="true" range="-180 180" />
+                <joint pos="-0.1 0 0" name="long_arm2jt" type="hinge" axis="0 0 1" limited="false" range="-3.14 3.14" />
                 <geom type="box" size="0.0025 0.1 0.02" euler="0 0 90" rgba="1 0 0 0.5" />
                 <body name="yellow" pos="0 -0.05 0">
-                    <joint pos="0 0.05 0" name="cylinder_l4_jt" type="hinge" axis="0 0 1" limited="true" range="-180 180" />
+                    <joint pos="0 0.05 0" name="cylinder_l4_jt" type="hinge" axis="0 0 1" limited="false" range="-3.14 3.14" />
                     <geom type="box" size="0.0025 0.05 0.02" euler="0 0 0" rgba="0.5 0.5 0 0.5" />
                     <body name="pen" pos="0 -0.05 0">
-                        <joint pos="0 0 0" name="cylinder_l3_jt" type="hinge" axis="0 0 1" limited="true" range="-180 180" />
-                        <!-- <joint pos="0 0 0" name="slide_jt1" type="slide" axis="1 0 0" limited="true" range="-1 1"/>
-                        <joint pos="0 0 0" name="slide_jt2" type="slide" axis="0 1 0" limited="true" range="-1 1"/> -->
+                        <joint pos="0 0 0" name="cylinder_l3_jt" type="hinge" axis="0 0 1" limited="false" range="-3.14 3.14" />
+                        <joint pos="0 0 0" name="slide_jt1" type="slide" axis="1 0 0" limited="true" range="-1 1"/>
+                        <joint pos="0 0 0" name="slide_jt2" type="slide" axis="0 1 0" limited="true" range="-1 1"/>
                         <geom type="cylinder" size="0.005 0.05" euler="0 0 0" rgba="1 0 0 1" />
                     </body>
                 </body>
             </body>
             <body name="green" pos="0.05 0 0">
-                <joint pos="-0.05 0 0" name="l1_jt" type="hinge" axis="0 0 1" limited="true" range="-180 180" />
+                <joint pos="-0.05 0 0" name="l1_jt" type="hinge" axis="0 0 1" limited="true" range="-3.14 3.14" />
                 <geom type="box" size="0.0025 0.05 0.02" euler="0 0 90" rgba="0 1 0 0.5" />
             </body>
         </body>
@@ -49,10 +45,10 @@
         <!-- <weld name="red_yellow" body1="l2" body2="l4" anchor="0 0 0" /> -->
         <!-- <weld name="blue_green" body1="longarm_1" body2="l3" anchor="0 0 0" /> -->
     </equality>
-    <!-- <actuator>
-        <position name="x_actuator" joint="slide_jt1" kp="30" inheritrange="1" />
-        <position name="y_actuator" joint="slide_jt2" kp="30" inheritrange="1"/>
-    </actuator> -->
+    <actuator>
+        <position name="x_actuator" joint="slide_jt1" kp="30"/>
+        <position name="y_actuator" joint="slide_jt2" kp="30"/>
+    </actuator>
 
 </mujoco>
   
