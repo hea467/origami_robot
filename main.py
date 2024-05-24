@@ -40,12 +40,9 @@ for i in range(10000):
     data.qpos[0] = np.pi/6
     if i==100:
         model.body_pos[4, 0] = 0.05
-        # data.qpos[4] = 0.05
-        # data.qpos[5] = 0.05
-    # elif (i%100==0):
-        # mujoco.mjr_readPixels(rgb_pixels, None, viewport, context)
-        # plt.imshow(np.flipud(rgb_pixels))
-        # plt.show()
+        print(data.qpos[0])
+        print(data.qpos[1])
+        print(data.qpos[3])
     
     mujoco.mj_step(model, data)
 
