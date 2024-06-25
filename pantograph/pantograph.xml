@@ -1,0 +1,89 @@
+<!-- to be done  -->
+<mujoco model="cube1">
+    <include file="scene.xml" />
+    <extension>
+        <plugin plugin="mujoco.elasticity.solid" />
+    </extension>
+    <worldbody>
+        <!-- long leg on the left, fixed end at 0, 0, 0 -->
+        <body name="v2" pos="0 0 0.1">
+            <inertial pos="0 0 0" mass="0.01" diaginertia="1.66667e-05 1.66667e-05 1.66667e-05" />
+        </body>
+        <body name="v1" pos="0 0 0.35">
+            <inertial pos="0 0 0" mass="0.01" diaginertia="1.66667e-05 1.66667e-05 1.66667e-05" />
+        </body>
+        <body name="v3" pos="0 0.5 0.35">
+            <inertial pos="0 0 0" mass="0.01" diaginertia="1.66667e-05 1.66667e-05 1.66667e-05" />
+            <joint name="v3_jx" pos="0 0 0" axis="1 0 0" type="slide" limited="true"
+                range="-0.3 0.3" />
+            <joint name="v3_jy" pos="0 0 0" axis="0 1 0" type="slide" limited="true"
+                range="-0.3 0.3" />
+        </body>
+        <body name="v4" pos="0 0.5 0.1">
+            <inertial pos="0 0 0" mass="0.01" diaginertia="1.66667e-05 1.66667e-05 1.66667e-05" />
+            <joint name="v4_jx" pos="0 0 0" axis="1 0 0" type="slide" limited="true"
+                range="-0.3 0.3" />
+            <joint name="v4_jy" pos="0 0 0" axis="0 1 0" type="slide" limited="true"
+                range="-0.3 0.3" />
+        </body>
+        <!-- Long end right connects at v3 v4-->
+        <body name="v5" pos="0.5 0.5 0.35">
+            <inertial pos="0 0 0" mass="0.01" diaginertia="1.66667e-05 1.66667e-05 1.66667e-05" />
+            <joint name="v5_jx" pos="0 0 0" axis="1 0 0" type="slide" limited="true"
+                range="-0.3 0.3" />
+            <joint name="v5_jy" pos="0 0 0" axis="0 1 0" type="slide" limited="true"
+                range="-0.3 0.3" />
+
+        </body>
+        <body name="v6" pos="0.5 0.5 0.1">
+            <inertial pos="0 0 0" mass="0.01" diaginertia="1.66667e-05 1.66667e-05 1.66667e-05" />
+            <joint name="v6_jx" pos="0 0 0" axis="1 0 0" type="slide" limited="true"
+                range="-0.3 0.3" />
+            <joint name="v6_jy" pos="0 0 0" axis="0 1 0" type="slide" limited="true"
+                range="-0.3 0.3" />
+        </body>
+
+        <!-- long leg on the left, fixed end at 0, 0, 0 -->
+
+        <body name="v9" pos="0.5 0 0.35">
+            <inertial pos="0 0 0" mass="0.01" diaginertia="1.66667e-05 1.66667e-05 1.66667e-05" />
+            <joint name="v9_jx" pos="0 0 0" axis="1 0 0" type="slide" limited="true"
+                range="-0.3 0.3" />
+            <joint name="v9_jy" pos="0 0 0" axis="0 1 0" type="slide" limited="true"
+                range="-0.3 0.3" />
+        </body>
+        <body name="v10" pos="0.5 0 0.1">
+            <inertial pos="0 0 0" mass="0.01" diaginertia="1.66667e-05 1.66667e-05 1.66667e-05" />
+            <joint name="v10_jx" pos="0 0 0" axis="1 0 0" type="slide" limited="true"
+                range="-0.3 0.3" />
+            <joint name="v10_jy" pos="0 0 0" axis="0 1 0" type="slide" limited="true"
+                range="-0.3 0.3" />
+        </body>
+
+        <!-- long leg on the left, connected to v9 v10 -->
+
+
+    </worldbody>
+
+    <deformable>
+        <flex name="body1" dim="2" body="v1 v2 v3 v4" vertex="0 0 0 0 0 0 0 0 0 0 0 0"
+            element="0 1 2 2 1 3" rgba="0 0 0.5 0.9" />
+        <flex name="body2" dim="2" body="v3 v4 v5 v6" vertex="0 0 0 0 0 0 0 0 0 0 0 0"
+            element="0 1 2 2 1 3" rgba="0 0 0.9 0.9" />
+        <flex name="body3" dim="2" body="v1 v2 v9 v10" vertex="0 0 0 0 0 0 0 0 0 0 0 0"
+            element="0 1 2 2 1 3" rgba="0 0.5 0 0.9" />
+        <flex name="body4" dim="2" body="v9 v10 v5 v6" vertex="0 0 0 0 0 0 0 0 0 0 0 0"
+            element="0 1 2 2 1 3" rgba="0 0.5 0 0.9" />
+
+    </deformable>
+    <equality>
+        <flex flex="body1" />
+        <flex flex="body2" />
+        <flex flex="body3" />
+        <flex flex="body4" />
+        <joint joint1="v5_jx" joint2="v6_jx" polycoef="0 1 0 0 0" />
+        <joint joint1="v5_jy" joint2="v6_jy" polycoef="0 1 0 0 0" />
+        <joint joint1="v9_jx" joint2="v10_jx" polycoef="0 1 0 0 0" />
+        <joint joint1="v9_jy" joint2="v10_jy" polycoef="0 1 0 0 0" />
+    </equality>
+</mujoco>
