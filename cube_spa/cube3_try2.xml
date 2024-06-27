@@ -1,0 +1,94 @@
+<mujoco model="cube3">
+    <include file="scene.xml" />
+    <extension>
+        <plugin plugin="mujoco.elasticity.solid" />
+    </extension>
+    <worldbody>
+        <!-- front face -->
+        <body name="v1" pos="0 0 0.1">
+            <inertial pos="0 0 0" mass="0.01" diaginertia="1.66667e-05 1.66667e-05 1.66667e-05" />
+        </body>
+        <body name="v2" pos="0.5 0 0.1">
+            <inertial pos="0 0 0" mass="0.01" diaginertia="1.66667e-05 1.66667e-05 1.66667e-05" />
+        </body>
+        <body name="v3" pos="0 0 0.6">
+            <inertial pos="0 0 0" mass="0.01" diaginertia="1.66667e-05 1.66667e-05 1.66667e-05" />
+            <joint name="v3_jx" pos="0 0 0" axis="1 0 0" type="slide" limited="true"
+                range="-0.4 0.4" />
+            <joint name="v3_jy" pos="0 0 0" axis="0 1 0" type="slide" limited="true"
+                range="-0.4 0.4" />
+            <joint name="v3_jz" pos="0 0 0" axis="0 0 1" type="slide" limited="true"
+                range="-0.4 0.4" />
+        </body>
+
+        <body name="v4" pos="0.5 0 0.6">
+            <inertial pos="0 0 0" mass="0.01" diaginertia="1.66667e-05 1.66667e-05 1.66667e-05" />
+            <joint name="v4_jx" pos="0 0 0" axis="1 0 0" type="slide" limited="true"
+                range="-0.4 0.4" />
+            <joint name="v4_jy" pos="0 0 0" axis="0 1 0" type="slide" limited="true"
+                range="-0.4 0.4" />
+            <joint name="v4_jz" pos="0 0 0" axis="0 0 1" type="slide" limited="true"
+                range="-0.4 0.4" />
+        </body>
+
+        <!-- left face -->
+
+        <body name="v5" pos="0 0.5 0.6">
+            <inertial pos="0 0 0" mass="0.01" diaginertia="1.66667e-05 1.66667e-05 1.66667e-05" />
+            <joint name="v5_jx" pos="0 0 0" axis="1 0 0" type="slide" limited="true"
+                range="-0.4 0.4" />
+            <joint name="v5_jy" pos="0 0 0" axis="0 1 0" type="slide" limited="true"
+                range="-0.4 0.4" />
+            <joint name="v5_jz" pos="0 0 0" axis="0 0 1" type="slide" limited="true"
+                range="-0.4 0.4" />
+        </body>
+
+        <body name="v6" pos="0 0.5 0.1">
+            <inertial pos="0 0 0" mass="0.01" diaginertia="1.66667e-05 1.66667e-05 1.66667e-05" />
+        </body>
+
+
+        <body name="v8" pos="0.5 0.5 0.1">
+            <inertial pos="0 0 0" mass="0.01" diaginertia="1.66667e-05 1.66667e-05 1.66667e-05" />
+        </body>
+
+        <body name="v9" pos="0.5 0.5 0.6">
+            <inertial pos="0 0 0" mass="0.01" diaginertia="1.66667e-05 1.66667e-05 1.66667e-05" />
+            <joint name="v9_jx" pos="0 0 0" axis="1 0 0" type="slide" limited="true"
+                range="-0.4 0.4" />
+            <joint name="v9_jy" pos="0 0 0" axis="0 1 0" type="slide" limited="true"
+                range="-0.4 0.4" />
+            <joint name="v9_jz" pos="0 0 0" axis="0 0 1" type="slide" limited="true"
+                range="-0.4 0.4" />
+        </body>
+
+
+    </worldbody>
+
+    <deformable>
+
+        <flex name="body3" dim="2" body="v5 v3 v1" vertex="0 0 0 0 0 0 0 0 0"
+            element="0 1 2" rgba="0 0.4 0 0.9" />
+        <flex name="body4" dim="2" body="v6 v1 v5" vertex="0 0 0 0 0 0 0 0 0"
+            element="0 1 2" rgba="0 0.9 0 0.9" />
+        <flex name="body5" dim="2" body="v2 v8 v4" vertex="0 0 0 0 0 0 0 0 0"
+            element="0 1 2" rgba="0.5 0.7 0.9 0.9" />
+        <flex name="body6" dim="2" body="v8 v9 v4" vertex="0 0 0 0 0 0 0 0 0"
+            element="0 1 2" rgba="0.5 0.9 0.9 0.9" />
+        <flex name="body7" dim="2" body="v3 v5 v9 v4" vertex="0 0 0 0 0 0 0 0 0 0 0 0"
+            element="0 1 2 2 3 0" rgba="0.5 0 0 0.9" />
+
+
+    </deformable>
+    <equality>
+
+        <flex flex="body3" />
+        <flex flex="body4" />
+        <flex flex="body5" />
+        <flex flex="body6" />
+        <flex flex="body7" />
+        <joint joint1="v4_jx" joint2="v5_jx" polycoef="0 -1 0 0 0" />
+        <joint joint1="v3_jx" joint2="v9_jx" polycoef="0 -1 0 0 0" />
+
+    </equality>
+</mujoco>
